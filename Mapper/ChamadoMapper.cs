@@ -48,7 +48,8 @@ namespace TicketHub.Mapper
                 chamado.PrioridadeId,
                 chamado.Setor?.Nome ?? "N/A",      
                 chamado.Prioridade?.Nome ?? "N/A",
-                tempoTotal
+                tempoTotal,
+                chamado.Status == ChamadoStatus.EmAtendimento && tempoTotal.TotalHours > (chamado.Prioridade?.HorasEstimadas ?? 0)
             );
         }
 

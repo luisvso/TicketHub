@@ -160,7 +160,8 @@
                 <tbody>
                     @if (Model != null && Model.Any()){
                         @foreach (var item in Model){
-                            var emAtraso = item.Status == ChamadoStatus.EmAtendimento && item.TempoTotalAtendimento.TotalMinutes > 1;
+                            @* var emAtraso = item.Status == ChamadoStatus.EmAtendimento && item.TempoTotalAtendimento.TotalHours > 1; *@
+                            var emAtraso = item.Atrasado;
 
                             <tr class="@(emAtraso ?  "table-danger" : "")">
                                 <td class="ps-4">
