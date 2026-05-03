@@ -1,0 +1,63 @@
+@model TicketHub.Contracts.Chamado.ChamadoCheckOutDTO;
+
+
+@{
+    ViewData[index: "Title"] = "Solução";
+}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            
+            @* Card Principal *@
+            <div class="card border-0 shadow-lg rounded-4">
+                
+                <div class="card-header bg-success text-white p-4 border-0">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-white bg-opacity-20 p-2 rounded-3 me-3">
+                            <i class="bi bi-check2-all fs-3"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-0 fw-bold">Finalizar Atendimento</h5>
+                            <small class="opacity-75">Chamado #@ViewBag.ChamadoId</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body p-4">
+                    <div class="mb-4 p-3 bg-light rounded-3 border-start border-success border-4">
+                        <label class="text-muted small text-uppercase fw-bold d-block mb-1">Título do Chamado</label>
+                        <span class="text-dark fw-semibold">@ViewBag.Titulo</span>
+                    </div>
+
+                    <form asp-action="CheckOut" asp-route-id="@ViewBag.ChamadoId" method="post">
+                        <div class="mb-3">
+                            <label asp-for="Solucao" class="form-label fw-bold text-dark">
+                                Solução Aplicada <span class="text-danger">*</span>
+                            </label>
+                            <textarea asp-for="Solucao" 
+                                      class="form-control border-2 shadow-sm" 
+                                      rows="6" 
+                                      placeholder="Descreva detalhadamente como o problema foi resolvido..."></textarea>
+                            <span asp-validation-for="Solucao" class="text-danger small"></span>
+                        </div>
+
+                        <div class="alert alert-info border-0 small d-flex align-items-center">
+                            <i class="bi bi-info-circle me-2"></i>
+                            Ao confirmar, o status mudará para Concluído e o tempo de atendimento será encerrado.
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-between mt-4">
+                            <a asp-action="Index" class="btn btn-light px-4 fw-medium">
+                                <i class="bi bi-arrow-left me-1"></i> Voltar
+                            </a>
+                            <button type="submit" class="btn btn-success px-5 fw-bold shadow-sm">
+                                Confirmar e Finalizar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

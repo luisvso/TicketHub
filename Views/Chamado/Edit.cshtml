@@ -1,0 +1,72 @@
+@model TicketHub.Contracts.Chamado.ChamadoUpdateDTO;
+
+@{
+    ViewData["Title"] = "Editar Chamado";
+    var id = Context.GetRouteValue("id");
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-7 col-lg-6">
+        <div class="card border-0 shadow-sm rounded-4">
+
+            <div class="card-header bg-white border-0 py-4 px-4">
+                <div class="d-flex align-items-center">
+                    <div class="bg-primary bg-opacity-10 p-2 rounded-3 me-3">
+                        <i class="bi bi-pencil-square text-primary"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-0 fw-bold">Editar Chamado</h5>
+                        <small class="text-muted">Protocolo: #@id</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body p-4">
+                <form asp-action="Edit" asp-route-id="@id" method="post">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Titulo" class="form-label fw-bold text-secondary text-uppercase small">Título do Chamado</label>
+                        <input asp-for="Titulo" type="text" placeholder="Ex: Problema no servidor" class="form-control bg-light border-0">
+                        <span asp-validation-for="Titulo" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Descicao" class="form-label fw-bold text-secondary text-uppercase small">Descrição Detalhada</label>
+                        <textarea asp-for="Descicao" rows="4" class="form-control bg-light border-0" placeholder="Descreva o problema aqui..."></textarea>
+                        <span asp-validation-for="Descicao" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="SetorId" class="form-label fw-bold text-secondary text-uppercase small">Setor Responsável</label>
+                            <select asp-for="SetorId" asp-items="ViewBag.Setores" class="form-select bg-light border-0">
+                                <option value="">Selecione o setor...</option>
+                            </select>
+                            <span asp-validation-for="SetorId" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <label asp-for="PrioridadeId" class="form-label fw-bold text-secondary text-uppercase small">Nível de Prioridade</label>
+                            <select asp-for="PrioridadeId" asp-items="ViewBag.Prioridades" class="form-select bg-light border-0">
+                                <option value="">Selecione a prioridade...</option>
+                            </select>
+                            <span asp-validation-for="PrioridadeId" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 pt-2">
+                        <a asp-action="Index" class="btn btn-light border w-50 fw-bold text-secondary">
+                            Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-primary w-50 py-2 fw-bold shadow-sm text-white">
+                            Salvar Alterações
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+@model TicketHub.Contracts.Chamado.ChamadoRequestDTO
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            <div class="card border-0 shadow-sm rounded-4 p-4">
+                
+                <div class="d-flex align-items-center mb-4">
+                    <div class="bg-primary bg-opacity-10 p-3 rounded-3 me-3 text-primary">
+                        <i class="bi bi-plus-circle-fill fs-4"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-0 fw-bold">Novo Chamado</h4>
+                        <small class="text-muted">Preencha os dados para iniciar o suporte</small>
+                    </div>
+                </div>
+
+                <form asp-action="Create" method="post">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-uppercase" style="letter-spacing: 0.5px;">Título do Problema</label>
+                        <input asp-for="Titulo" class="form-control form-control-lg rounded-3 fs-6" placeholder="Ex: Monitor não liga" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-uppercase" style="letter-spacing: 0.5px;">Descrição Detalhada</label>
+                        <textarea asp-for="Descricao" class="form-control rounded-3" rows="4" placeholder="Descreva o que está acontecendo..."></textarea>
+                    </div>
+
+                    <div class="row mb-4">
+
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold text-uppercase">Setor</label>
+                            <select asp-for="SetorId" class="form-select rounded-3" 
+                                    asp-items="@(ViewBag.Setores as SelectList)">
+                                <option value="">Selecione o setor...</option>
+                            </select>
+                            <span asp-validation-for="SetorId" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold text-uppercase">Prioridade</label>
+                            <select asp-for="PrioridadeId" class="form-select rounded-3"
+                            asp-items="@(ViewBag.Prioridades as SelectList)">
+                            <option value="">Selecione a Prioridade...</option>
+                            </select>
+                            <span asp-validation-for="PrioridadeId" class="text-danger small"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold shadow-sm">
+                            Criar Chamado
+                        </button>
+                        <a asp-action="Index" class="btn btn-link text-muted fw-medium mt-1">Cancelar</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

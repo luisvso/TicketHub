@@ -1,0 +1,44 @@
+@model TicketHub.Contracts.Setor.SetorResponseDTO
+
+@{
+    ViewData["Title"] = "Excluir Setor";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="bg-danger py-2"></div>
+            
+            <div class="card-body p-4">
+                <div class="text-center mb-4">
+                    <div class="bg-danger bg-opacity-10 p-3 rounded-circle d-inline-block mb-3">
+                        <i class="bi bi-exclamation-triangle text-danger fs-2"></i>
+                    </div>
+                    <h4 class="fw-bold">Confirmar Exclusão</h4>
+                    <p class="text-muted">Esta ação não pode ser desfeita.</p>
+                </div>
+
+                <div class="bg-light rounded-3 p-3 mb-4">
+                    <small class="text-secondary fw-bold text-uppercase d-block mb-1">Setor selecionado:</small>
+                    <h5 class="mb-1 fw-bold text-dark">@Model.Nome</h5>
+                    <p class="text-muted small mb-0">@Model.Descricao</p>
+                </div>
+
+                <form asp-action="DeleteConf" asp-route-id="@Context.GetRouteValue("id")" method="post">
+                    @Html.AntiForgeryToken()
+                    
+                    <div class="d-flex gap-2">
+                        <a asp-action="Index" class="btn btn-light border w-50 py-2 fw-bold text-secondary">
+                            Não, cancelar
+                        </a>
+                        <button type="submit" class="btn btn-danger w-50 py-2 fw-bold shadow-sm">
+                            Sim, excluir
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>

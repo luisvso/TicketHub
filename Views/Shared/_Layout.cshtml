@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TicketHub</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        body { background-color: #f0f2f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow-x: hidden; }
+        .sidebar { width: 260px; height: 100vh; background-color: #111c44; position: fixed; color: white; z-index: 1000; }
+        .sidebar .nav-link { color: #a3abb9; padding: 12px 20px; display: flex; align-items: center; border-radius: 8px; margin: 4px 15px; transition: 0.3s; }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active { background-color: #1a2551; color: white; }
+        .sidebar .nav-link.active { background-color: #2d3e85; }
+        .main-content { margin-left: 260px; min-height: 100vh; width: calc(100% - 260px); }
+        .top-header { background: white; padding: 15px 30px; border-bottom: 1px solid #e9ecef; display: flex; justify-content: space-between; align-items: center; sticky: top; }
+        .logo-section { padding: 25px 20px; border-bottom: 1px solid #1e2b5e; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo-section">
+            <h5 class="mb-0 fw-bold">W5i CheckFlow</h5>
+            <small style="font-size: 0.7rem; color: #718096;">SISTEMA DE CHAMADOS</small>
+        </div>
+        
+        <div class="mt-4">
+            <small class="text-uppercase px-4 mb-2 d-block" style="font-size: 0.65rem; color: #718096; letter-spacing: 1px;">MENU</small>
+            <nav class="nav flex-column">
+                <a class="nav-link @(Context.Request.Path.Value.Contains("Chamado") ? "active" : "")" asp-controller="Chamado" asp-action="Index">
+                    <i class="bi bi-grid-fill me-2"></i> Chamados
+                </a>
+                <a class="nav-link @(Context.Request.Path.Value.Contains("Setor") ? "active" : "")" asp-controller="Setor" asp-action="Index">
+                    <i class="bi bi-layers-fill me-2"></i> Setores
+                </a>
+                <a class="nav-link @(Context.Request.Path.Value.Contains("Prioridade") ? "active" : "")" asp-controller="Prioridade" asp-action="Index">
+                    <i class="bi bi-flag-fill me-2"></i> Prioridades
+                </a>
+            </nav>
+        </div>
+
+    </div>
+
+    <div class="main-content">
+        <header class="top-header">
+            <div>
+                <h5 class="mb-0 fw-bold text-dark">@ViewData["Title"]</h5>
+                <small class="text-muted">Gerencie os chamados do sistema</small>
+            </div>
+        </header>
+
+        <main role="main" class="p-4">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

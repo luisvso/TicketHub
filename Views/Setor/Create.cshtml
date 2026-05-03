@@ -1,0 +1,58 @@
+@model TicketHub.Contracts.Setor.SetorRequestDTO;
+
+@{
+    ViewData["Title"] = "Novo Setor";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-header bg-white border-0 py-4 px-4">
+                <div class="d-flex align-items-center">
+                    <div class="bg-primary bg-opacity-10 p-2 rounded-3 me-3">
+                        <i class="bi bi-plus-circle-fill text-primary"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-0 fw-bold">Cadastrar Setor</h5>
+                        <small class="text-muted">Preencha os dados abaixo</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-body p-4">
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Nome" class="form-label fw-bold text-secondary small text-uppercase">Nome do Setor</label>
+                        <input asp-for="Nome" class="form-control bg-light border-0" placeholder="Ex: Tecnologia da Informação" required />
+                        <span asp-validation-for="Nome" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Descricao" class="form-label fw-bold text-secondary small text-uppercase">Descrição</label>
+                        <textarea asp-for="Descricao" class="form-control bg-light border-0" rows="3" 
+                                placeholder="Descreva as responsabilidades deste setor..."></textarea>
+                        <span asp-validation-for="Descricao" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex gap-2 pt-2">
+                        <a asp-action="Index" class="btn btn-light border w-50 py-2 fw-bold text-secondary">
+                            Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-primary w-50 py-2 fw-bold shadow-sm" style="background-color: #3182ce;">
+                            Salvar Setor
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync(partialViewName: "_ValidationScriptsPartial");}
+}

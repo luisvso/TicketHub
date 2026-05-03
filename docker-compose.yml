@@ -1,0 +1,35 @@
+services:
+  db_ticket_hub:
+    image: postgres:17
+    container_name: db_ticket_hub
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - polls_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      retries: 5
+
+  web_app:
+    build: .
+    container_name: tickethub_app
+    env_file:
+      - .env
+    environment:
+      - ConnectionStrings__AppDbConnectionString=Host=db_ticket_hub;Port=5432;Database=${DB_NAME};Username=${DB_USER};Password=${DB_PASSWORD}
+      - ASPNETCORE_URLS=http://+:8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      db_ticket_hub:
+        condition: service_healthy
+
+volumes:
+  polls_pg_data:
