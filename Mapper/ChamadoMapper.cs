@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using TicketHub.Contracts.Chamado;
 using TicketHub.Models.Entities;
 using TicketHub.Models.Enums;
@@ -18,8 +19,8 @@ namespace TicketHub.Mapper
             {
                 Titulo = dto.Titulo,
                 Descricao = dto.Descricao,
-                SetorId = dto.SetorId,
-                PrioridadeId = dto.PrioridadeId,
+                SetorId = dto.SetorId.Value,
+                PrioridadeId = dto.PrioridadeId.Value,
                 Status = ChamadoStatus.Aberto, 
                 DataAbertura = DateTime.UtcNow
             };
@@ -35,11 +36,17 @@ namespace TicketHub.Mapper
                 tempoTotal = (chamado.DataFinal ?? DateTime.UtcNow) - chamado.DataInicio.Value;
             }
 
+            var status = chamado.Status == ChamadoStatus.EmAtendimento &&
+                        tempoTotal.TotalHours > (chamado.Prioridade?.HorasEstimadas ?? 0)
+                        ? ChamadoStatus.Atrasado
+                        : chamado.Status;
+
+
             return new ChamadoResponseDTO(
                 chamado.Id,
                 chamado.Titulo,
                 chamado.Descricao,
-                chamado.Status,
+                status,
                 chamado.DataAbertura,
                 chamado.DataInicio,
                 chamado.DataFinal,
@@ -48,8 +55,7 @@ namespace TicketHub.Mapper
                 chamado.PrioridadeId,
                 chamado.Setor?.Nome ?? "N/A",      
                 chamado.Prioridade?.Nome ?? "N/A",
-                tempoTotal,
-                chamado.Status == ChamadoStatus.EmAtendimento && tempoTotal.TotalHours > (chamado.Prioridade?.HorasEstimadas ?? 0)
+                tempoTotal
             );
         }
 

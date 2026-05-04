@@ -8,6 +8,7 @@ namespace TicketHub.Interfaces.IRepository
 {
     public interface ISetorRepository : IBaseRepository<Setor>
     {
+        Task<bool> PossuiChamados<Tid>(Tid id);
         
     }
 }

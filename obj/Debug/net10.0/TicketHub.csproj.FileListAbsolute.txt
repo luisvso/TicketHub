@@ -304,3 +304,4 @@
 /home/luis/Dev/C#/TicketHub/bin/Debug/net10.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 /home/luis/Dev/C#/TicketHub/obj/Debug/net10.0/TicketHub.csproj.AssemblyReference.cache
 /home/luis/Dev/C#/TicketHub/obj/Debug/net10.0/TicketHub.csproj.Up2Date
+/home/luis/Dev/C#/TicketHub/obj/Debug/net10.0/TicketHub.sourcelink.json

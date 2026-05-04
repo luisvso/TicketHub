@@ -47,6 +47,8 @@ namespace TicketHub.Controllers
             {
                 await _setorService.CreateSetor(dto);
 
+                TempData["Sucesso"] = "Setor Criado com Sucesso!";
+
                 return RedirectToAction(nameof(Index));
             }
             catch (DuplicateResourceException ex)
@@ -83,6 +85,7 @@ namespace TicketHub.Controllers
             if(ModelState.IsValid)
             {
                 var result = await _setorService.UpdateSetor(id, dto);
+                TempData["Sucesso"] = "Setor Atualizado com Sucesso!";
 
                 return RedirectToAction(nameof(Index));
             }
@@ -106,7 +109,15 @@ namespace TicketHub.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConf(int id)
         {
-            await _setorService.Delete(id);
+            try
+            {
+                await _setorService.Delete(id);
+                TempData["Sucesso"] = "Setor Deletado com Sucesso!";
+            }
+            catch (Exception ex)
+            {
+                TempData["Erro"] = ex.Message;
+            }
 
             return RedirectToAction(nameof(Index));
         }

@@ -68,6 +68,9 @@ namespace TicketHub.Services
 
         public async Task Delete(int id)
         {
+
+            if (await _repository.PossuiChamados(id)) throw new InvalidOperationException("Este setor esta vinculado a um chamado e não pode ser excluido");
+
             var setor = await _repository.GetById(id);
             if (setor != null)
             {

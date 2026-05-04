@@ -30,6 +30,10 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
+[/home/luis/Dev/C\#/TicketHub/Views/Chamado/Cancel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2hhbWFkby9DYW5jZWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/luis/Dev/C\#/TicketHub/Views/Chamado/CheckOut.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2hhbWFkby9DaGVja091dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

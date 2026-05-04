@@ -8,11 +8,12 @@ using TicketHub.Models.Enums;
 namespace TicketHub.Contracts.Chamado
 {
     public record ChamadoRequestDTO(
-        string? Titulo,
+        [Required(ErrorMessage = "O chamado deve ter um Titulo")]
+        string Titulo,
         [Required(ErrorMessage = "A Descrição do chamado é obrigatorio")]
         string Descricao,
         [Required(ErrorMessage = "Um chamado deve pertencer a um setor")]
-        int SetorId,
+        int? SetorId,
         [Required(ErrorMessage = "Um chamado deve ter prioridade")]
-        int PrioridadeId);
+        int? PrioridadeId);
 }

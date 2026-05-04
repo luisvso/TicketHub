@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Humanizer.Localisation.CollectionFormatters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -109,13 +110,21 @@ namespace TicketHub.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Cancel(int id)
+        {
+            var chamado = await _service.GetById(id);
+            if (chamado == null) return NotFound();
+            return View(chamado);
+        }
+
         [HttpPost]
-        public async Task<IActionResult> Cancelar(int id)
+        public async Task<IActionResult> Cancel(int id, IFormCollection form)
         {
             try
             {
                 await _service.Cancelar(id);
-                TempData["Success"] = "Chamado foi cancelado com sucesso";
+                TempData["Sucesso"] = "Chamado cancelado com sucesso";
             }
             catch (Exception ex)
             {
@@ -141,7 +150,17 @@ namespace TicketHub.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConf(int id)
         {
-            await _service.Delete(id);
+
+            try
+            {
+                await _service.Delete(id);
+                TempData["Sucesso"] = "Chamado Deletado com Sucesso";
+
+
+            }catch(Exception ex)
+            {
+                ModelState.AddModelError("Chamado", ex.Message);
+            }
 
             return RedirectToAction(nameof(Index));
         }
@@ -154,6 +173,8 @@ namespace TicketHub.Controllers
 
             var dto = new ChamadoUpdateDTO(chamado.Titulo, chamado.Descricao, chamado.SetorId, chamado.PrioridadeId);
 
+            await CarregarViewBags();
+
             return View(dto);
         }
 
@@ -165,9 +186,12 @@ namespace TicketHub.Controllers
             if (ModelState.IsValid)
             {
                 await _service.Update(id, dto);
+                TempData["Sucesso"] = "Chamado Editado com Sucesso!";
 
                 return RedirectToAction(nameof(Index));
             }
+
+            await CarregarViewBags();
 
             return View(dto);
         }

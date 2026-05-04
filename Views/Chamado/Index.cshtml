@@ -10,10 +10,11 @@
     var chamados = Model;
 
     var total = chamados.Count();
+    var aberto = chamados.Count(c => c.Status == ChamadoStatus.Aberto);
     var emAtendimento = chamados.Count(c => c.Status == ChamadoStatus.EmAtendimento);
     var finalizados = chamados.Count(c => c.Status == ChamadoStatus.Finalizado);
 
-    var atrasados = chamados.Count(c => c.Status == ChamadoStatus.EmAtendimento && c.TempoTotalAtendimento.TotalMinutes > 1);
+    var atrasados = chamados.Count(c => c.Status == ChamadoStatus.Atrasado);
 }
 
 <div class="container-fluid">
@@ -33,8 +34,8 @@
                         <i class="bi bi-collection fs-4"></i>
                     </div>
                     <div>
-                        <small class="text-muted d-block fw-medium">Total</small>
-                        <h4 class="mb-0 fw-bold">@total</h4>
+                        <small class="text-muted d-block fw-medium">Abertos</small>
+                        <h4 class="mb-0 fw-bold">@aberto</h4>
                     </div>
                 </div>
             </div>
@@ -121,8 +122,9 @@
                         <option value="">Todos os Status</option>
                         <option value="Aberto">Aberto</option>
                         <option value="EmAtendimento">Em Atendimento</option>
-                        <option value="Finalizado">Finalizado</option>
+                        <option value="Finalizado">Concluído</option>
                         <option value="Cancelado">Cancelado</option>
+                        <option value="Atrasado">Atrasado</option>
                     </select>
                 </div>
 
@@ -147,7 +149,7 @@
 
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
-                <thead style="background-color: #fafbfd;">
+                <thead class="bg-light">
                     <tr class="text-muted small text-uppercase" style="font-size: 0.7rem;">
                         <th class="ps-4 py-3">Descrição / Título</th>
                         <th>Setor</th>
@@ -160,10 +162,8 @@
                 <tbody>
                     @if (Model != null && Model.Any()){
                         @foreach (var item in Model){
-                            @* var emAtraso = item.Status == ChamadoStatus.EmAtendimento && item.TempoTotalAtendimento.TotalHours > 1; *@
-                            var emAtraso = item.Atrasado;
 
-                            <tr class="@(emAtraso ?  "table-danger" : "")">
+                            <tr class="@(item.Status == ChamadoStatus.Atrasado ?  "table-danger" : "")">
                                 <td class="ps-4">
                                     <span class="fw-semibold text-dark d-block">@item.Titulo</span>
                                     <small class="text-muted">@item.Descricao</small>
@@ -187,8 +187,13 @@
 
                                 <td>
                                     @if(item.Status == ChamadoStatus.Finalizado){
-                                        <span class="badge bg-success ">Concluído</span>
-                                    }else if(emAtraso){
+                                        <span class="badge bg-success" 
+                                            data-bs-toggle="tooltip" 
+                                            data-bs-placement="top" 
+                                            title="@item.Solucao">
+                                            Concluído
+                                        </span>
+                                    }else if(item.Status == ChamadoStatus.Atrasado){
                                         <span class="badge bg-danger ">Atrasado</span>
                                     }else if (item.Status == ChamadoStatus.EmAtendimento){
                                         <span class="badge bg-warning">Em Atendimento</span>
@@ -200,7 +205,7 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <i class="bi bi-clock me-2 text-muted"></i>
-                                        <span class="fw-medium @( emAtraso ? "text-danger" : "text-dark")">
+                                        <span class="fw-medium @( item.Status == ChamadoStatus.Atrasado ? "text-danger" : "text-dark")">
                                             @($"{ (int)item.TempoTotalAtendimento.TotalHours }h { item.TempoTotalAtendimento.Minutes }min")
                                         </span>
                                     </div>
@@ -216,7 +221,7 @@
                                                 </button>
                                             </form>
                                         }
-                                        else if (item.Status == ChamadoStatus.EmAtendimento)
+                                        else if (item.Status == ChamadoStatus.EmAtendimento || item.Status == ChamadoStatus.Atrasado)
                                         {
                                             <a asp-action="CheckOut" asp-route-id="@item.Id" class="btn btn-sm btn-success fw-bold px-3 rounded-pill shadow-sm">
                                                 <i class="bi bi-check2-circle"></i> Finalizar
@@ -240,11 +245,10 @@
 
                                                 @if(item.Status != ChamadoStatus.Finalizado && item.Status != ChamadoStatus.Cancelado) {
                                                     <li>
-                                                        <form asp-action="Cancelar" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Deseja realmente cancelar?')">
-                                                            <button type="submit" class="dropdown-item d-flex align-items-center text-warning">
-                                                                <i class="bi bi-x-circle me-2"></i> Cancelar
-                                                            </button>
-                                                        </form>
+                                                        <a class="dropdown-item d-flex align-items-center text-warning" 
+                                                        asp-action="Cancel" asp-route-id="@item.Id">
+                                                            <i class="bi bi-x-circle me-2"></i> Cancelar
+                                                        </a>
                                                     </li>
                                                 }
 
@@ -276,3 +280,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        tooltips.forEach(el => new bootstrap.Tooltip(el))
+    });
+</script>

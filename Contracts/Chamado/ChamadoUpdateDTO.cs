@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 namespace TicketHub.Contracts.Chamado
 {
     public record ChamadoUpdateDTO(
-        string? Titulo,
-        [Required(ErrorMessage = "A Descrição precisa ter um titulo")]
+        [Required(ErrorMessage = "Um chamado deve ter um Titulo")]
+        string Titulo,
+        [Required(ErrorMessage = "A Descrição precisa ter uma Descricao")]
         string Descicao,
-        [Required(ErrorMessage = "O Chamado precisa ter um setor")]
+        [Required(ErrorMessage = "O Chamado precisa ter um Setor")]
         int SetorId,
-        [Required(ErrorMessage = "O chamado precisa ter uma prioridade")]
+        [Required(ErrorMessage = "O chamado precisa ter uma Prioridade")]
         int PrioridadeId);
 }

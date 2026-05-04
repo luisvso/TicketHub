@@ -49,6 +49,7 @@ namespace TicketHub.Controllers
             try
             {
                 await _service.CreatePrioridade(dto);
+                TempData["Sucesso"] = "Prioridade Criada com Sucesso!";
                 return RedirectToAction(nameof(Index));
             }
             catch(Exception ex)
@@ -76,6 +77,8 @@ namespace TicketHub.Controllers
             {
                 var result = await _service.UpdatePrioridade(id, dto);
 
+                TempData["Sucesso"] = "Prioridade Editada com Sucesso";
+
                 return RedirectToAction(nameof(Index));
             }
 
@@ -97,7 +100,15 @@ namespace TicketHub.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConf(int id)
         {
-            await _service.DeletePrioridade(id);
+            try
+            {
+                await _service.DeletePrioridade(id);
+                TempData["Sucesso"] = "Prioridade Deletada com Sucesso!";
+            }catch(Exception ex)
+            {
+                TempData["Erro"] = ex.Message;
+            }
+
             return RedirectToAction(nameof(Index));
         }
 

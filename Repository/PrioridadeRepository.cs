@@ -53,5 +53,11 @@ namespace TicketHub.Repository
             return await _context.SaveChangesAsync();
         }
 
+        public async Task<bool> PossuiChamado<Tid>(Tid id)
+        {
+            int idInt = Convert.ToInt32(id);
+            return await _context.Chamados.AnyAsync(c => c.PrioridadeId == idInt);
+        }
+
     }
 }

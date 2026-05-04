@@ -8,6 +8,6 @@ namespace TicketHub.Interfaces.IRepository
 {
     public interface IPrioridadeRepository : IBaseRepository<Prioridade>
     {
-        
+        Task<bool> PossuiChamado<Tid>(Tid id);
     }
 }

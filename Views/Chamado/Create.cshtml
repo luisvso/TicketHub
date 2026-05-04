@@ -19,12 +19,14 @@
                 <form asp-action="Create" method="post">
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-uppercase" style="letter-spacing: 0.5px;">Título do Problema</label>
-                        <input asp-for="Titulo" class="form-control form-control-lg rounded-3 fs-6" placeholder="Ex: Monitor não liga" required />
+                        <input asp-for="Titulo" class="form-control form-control-lg rounded-3 fs-6" placeholder="Ex: Monitor não liga"/>
+                        <span asp-validation-for="Titulo" class="text-danger small"></span>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-uppercase" style="letter-spacing: 0.5px;">Descrição Detalhada</label>
                         <textarea asp-for="Descricao" class="form-control rounded-3" rows="4" placeholder="Descreva o que está acontecendo..."></textarea>
+                        <span asp-validation-for="Descricao" class="text-danger small"></span>
                     </div>
 
                     <div class="row mb-4">
@@ -49,12 +51,13 @@
 
                     </div>
 
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold shadow-sm">
+                    <div class="d-flex gap-2 pt-2">
+                        <a asp-action="Index" class="btn btn-light w-50 py-2 fw-bold text-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-primary border w-50 py-2 fw-bold shadow-sm">
                             Criar Chamado
                         </button>
-                        <a asp-action="Index" class="btn btn-link text-muted fw-medium mt-1">Cancelar</a>
                     </div>
+
                 </form>
 
             </div>

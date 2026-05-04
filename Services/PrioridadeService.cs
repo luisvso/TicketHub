@@ -57,6 +57,9 @@ namespace TicketHub.Services
 
         public async Task DeletePrioridade(int id)
         {
+            
+            if(await _repository.PossuiChamado(id)) throw new InvalidOperationException("Esta prioridade esta vinculada a um chamado e não pode ser deletada");
+            
             var prioridade = await _repository.GetById(id);
 
             if(prioridade != null)

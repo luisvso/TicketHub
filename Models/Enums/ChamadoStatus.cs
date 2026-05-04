@@ -5,6 +5,7 @@ namespace TicketHub.Models.Enums
         Aberto,
         EmAtendimento,
         Finalizado,
-        Cancelado
+        Cancelado,
+        Atrasado
     }
 }

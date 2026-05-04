@@ -19,6 +19,6 @@ namespace TicketHub.Contracts.Chamado
         int PrioridadeId,
         string SetorNome,
         string PrioridadeNome,
-        TimeSpan TempoTotalAtendimento,
-        bool Atrasado);
+        TimeSpan TempoTotalAtendimento
+        );
 }

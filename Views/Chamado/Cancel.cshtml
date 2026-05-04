@@ -1,0 +1,44 @@
+@model TicketHub.Contracts.Chamado.ChamadoResponseDTO
+@{
+    ViewData["Title"] = "Cancelar Chamado";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="bg-warning py-2"></div>
+            <div class="card-body p-5">
+                <div class="text-center mb-4">
+                    <div class="bg-warning bg-opacity-10 p-3 rounded-circle d-inline-block mb-3">
+                        <i class="bi bi-x-circle text-warning fs-3"></i>
+                    </div>
+                </div>
+                <h4 class="fw-semibold">Confirmar Cancelamento</h4>
+                <p class="text-muted">Esta ação não pode ser desfeita</p>
+                <div class="bg-light rounded-3 p-3 mb-4">
+                    <small class="text-secondary fw-bold text-uppercase d-block mb-1">Chamado Selecionado</small>
+                    <h5 class="mb-1 fw-bold text-dark">@Model.Titulo</h5>
+                    <p class="text-muted mb-0">Descrição: @Model.Descricao</p>
+                    <p class="text-muted mb-0">Prioridade: @Model.PrioridadeNome</p>
+                    <p class="text-muted mb-0">Setor: @Model.SetorNome</p>
+                    <p class="text-muted mb-0">Status: @Model.Status</p>
+                </div>
+                <div class="alert alert-warning border-0 small d-flex align-items-center">
+                    <i class="bi bi-info-circle me-2"></i>
+                    Ao confirmar, o status mudará para Cancelado e o chamado não poderá ser iniciado.
+                </div>
+                <form asp-action="Cancel" asp-route-id="@Context.GetRouteValue("id")" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="d-flex gap-2">
+                        <a asp-action="Index" class="btn btn-light border w-50 py-2 fw-bold text-secondary">
+                            Não, Voltar
+                        </a>
+                        <button class="btn btn-warning w-50 py-2 fw-bold shadow-sm text-dark">
+                            Sim, Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
