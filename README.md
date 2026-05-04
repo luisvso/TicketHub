@@ -4,7 +4,7 @@ Sistema de controle de atendimentos e chamados internos desenvolvido em **ASP.NE
 
 ## 🎥 Demonstração
 
-> Adicione o link do vídeo aqui
+[![Demonstração do TicketHub](https://img.youtube.com/vi/J4tJMLB7C2k/0.jpg)](https://www.youtube.com/watch?v=J4tJMLB7C2k)
 
 ## ✨ Funcionalidades
 
